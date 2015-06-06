@@ -16,4 +16,31 @@ public class Table {
   private IDatablock first_datablock;
   // TODO: estrutura para armazenar quais datablocks da tabela ainda tem algum
   //       espaço livre
+  
+  public Record select(int clientId)
+  {
+    // busca por clientId (usa índice)
+    return null;
+  }
+  
+  public Record[] select(String name)
+  {
+    // busca por name (full table scan)
+    return null;
+  }
+  
+  public boolean insert(int clientId, String Name)
+  {
+    return false;
+  }
+  
+  public boolean update(int clientId, String Name)
+  {
+    return false;
+  }
+  
+  public boolean delete(int clientId)
+  {
+    return false;
+  }
 }
