@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package btreesim;
+package physical;
 
 /**
  *
  * @author taschetto
  */
-public class BTreeSim {
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    // TODO code application logic here
-  }
-
+public class Database {
+  public static final int DATABASE_SIZE_IN_DATAFILES = 1;
+  
+  private String name;
+  private Datafile[] datafiles = new Datafile[DATABASE_SIZE_IN_DATAFILES];
 }

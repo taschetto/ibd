@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package btreesim;
+package logical;
+
+import physical.IDatablock;
 
 /**
  *
  * @author taschetto
  */
-public class BTreeSim {
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    // TODO code application logic here
-  }
-
+public class BTree {
+  private String name;
+  private IDatablock first_datablock;
 }
