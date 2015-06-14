@@ -1,6 +1,7 @@
 package btree;
 
-public enum NodeType {
+public enum NodeType
+{
   BranchNode,
   LeafNode
 }

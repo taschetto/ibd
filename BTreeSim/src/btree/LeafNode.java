@@ -1,6 +1,7 @@
 package btree;
 
-class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
+class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey>
+{
   protected final static int LEAFORDER = 4;
   private Object[] values;
 
@@ -9,6 +10,8 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
     this.keys = new Object[LEAFORDER + 1];
     this.values = new Object[LEAFORDER + 1];
   }
+
+/* Getters & setters **********************************************************/
 
   public TValue getValue(int index)
   {
@@ -20,36 +23,12 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
     this.values[index] = value;
   }
 
-  @Override
-  public NodeType getNodeType()
-  {
-    return NodeType.LeafNode;
-  }
-
-  @Override
-  public int search(TKey key)
-  {
-    for (int i = 0; i < this.getKeyCount(); ++i)
-    {
-       int cmp = this.getKey(i).compareTo(key);
-       if (cmp == 0) {
-         return i;
-       }
-       else if (cmp > 0) {
-         return -1;
-       }
-    }
-
-    return -1;
-  }
-
-  /* The codes below are used to support insertion operation */
+/* Insertion auxiliary methods ************************************************/
 
   public void insertKey(TKey key, TValue value)
   {
     int index = 0;
-    while (index < this.getKeyCount() && this.getKey(index).compareTo(key) < 0)
-      ++index;
+    while (index < this.getKeyCount() && this.getKey(index).compareTo(key) < 0) ++index;
     this.insertAt(index, key, value);
   }
 
@@ -68,9 +47,57 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
     ++this.keyCount;
   }
 
-  /**
-   * When splits a leaf node, the middle key is kept on new node and be pushed to parent node.
-   */
+/* Deletion auxiliary methods *************************************************/
+
+  private void deleteAt(int index) {
+    int i = index;
+    for (i = index; i < this.getKeyCount() - 1; ++i)
+    {
+      this.setKey(i, this.getKey(i + 1));
+      this.setValue(i, this.getValue(i + 1));
+    }
+    this.setKey(i, null);
+    this.setValue(i, null);
+    --this.keyCount;
+  }
+
+  public boolean delete(TKey key)
+  {
+    int index = this.search(key);
+    if (index == -1)
+      return false;
+
+    this.deleteAt(index);
+    return true;
+  }
+
+/* Node<Tkey> methods implementation ******************************************/
+
+  @Override
+  public NodeType getNodeType()
+  {
+    return NodeType.LeafNode;
+  }
+
+  @Override
+  public int search(TKey key)
+  {
+    for (int i = 0; i < this.getKeyCount(); ++i)
+    {
+       int cmp = this.getKey(i).compareTo(key);
+       if (cmp == 0)
+       {
+         return i;
+       }
+       else if (cmp > 0)
+       {
+         return -1;
+       }
+    }
+
+    return -1;
+  }
+
   @Override
   protected Node<TKey> split()
   {
@@ -95,30 +122,6 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
     throw new UnsupportedOperationException();
   }
 
-  /* The codes below are used to support deletion operation */
-
-  public boolean delete(TKey key)
-  {
-    int index = this.search(key);
-    if (index == -1)
-      return false;
-
-    this.deleteAt(index);
-    return true;
-  }
-
-  private void deleteAt(int index) {
-    int i = index;
-    for (i = index; i < this.getKeyCount() - 1; ++i)
-    {
-      this.setKey(i, this.getKey(i + 1));
-      this.setValue(i, this.getValue(i + 1));
-    }
-    this.setKey(i, null);
-    this.setValue(i, null);
-    --this.keyCount;
-  }
-
   @Override
   protected void processChildrenTransfer(Node<TKey> borrower, Node<TKey> lender, int borrowIndex)
   {
@@ -131,16 +134,14 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
     throw new UnsupportedOperationException();
   }
 
-  /**
-   * Notice that the key sunk from parent is be abandoned. 
-   */
   @Override
-  @SuppressWarnings("unchecked")
-  protected void fusionWithSibling(TKey sinkKey, Node<TKey> rightSibling) {
+  protected void fusionWithSibling(TKey sinkKey, Node<TKey> rightSibling)
+  {
     LeafNode<TKey, TValue> siblingLeaf = (LeafNode<TKey, TValue>)rightSibling;
 
     int j = this.getKeyCount();
-    for (int i = 0; i < siblingLeaf.getKeyCount(); ++i) {
+    for (int i = 0; i < siblingLeaf.getKeyCount(); ++i)
+    {
       this.setKey(j + i, siblingLeaf.getKey(i));
       this.setValue(j + i, siblingLeaf.getValue(i));
     }
@@ -152,8 +153,8 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey> {
   }
 
   @Override
-  @SuppressWarnings("unchecked")
-  protected TKey transferFromSibling(TKey sinkKey, Node<TKey> sibling, int borrowIndex) {
+  protected TKey transferFromSibling(TKey sinkKey, Node<TKey> sibling, int borrowIndex)
+  {
     LeafNode<TKey, TValue> siblingNode = (LeafNode<TKey, TValue>)sibling;
 
     this.insertKey(siblingNode.getKey(borrowIndex), siblingNode.getValue(borrowIndex));

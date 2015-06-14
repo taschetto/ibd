@@ -16,6 +16,8 @@ abstract class Node<TKey extends Comparable<TKey>>
     this.rightSibling = null;
   }
 
+/* Getters & setters **********************************************************/
+
   public int getKeyCount()
   {
     return this.keyCount;
@@ -40,6 +42,32 @@ abstract class Node<TKey extends Comparable<TKey>>
   {
     this.parentNode = parent;
   }
+
+  public Node<TKey> getLeftSibling()
+  {
+    if (this.leftSibling != null && this.leftSibling.getParent() == this.getParent())
+      return this.leftSibling;
+    return null;
+  }
+
+  public void setLeftSibling(Node<TKey> sibling)
+  {
+    this.leftSibling = sibling;
+  }
+
+  public Node<TKey> getRightSibling()
+  {
+    if (this.rightSibling != null && this.rightSibling.getParent() == this.getParent())
+      return this.rightSibling;
+    return null;
+  }
+
+  public void setRightSibling(Node<TKey> silbling)
+  {
+    this.rightSibling = silbling;
+  }
+
+/* Over and underflow managing ************************************************/
 
   public boolean isOverflow()
   {
@@ -80,30 +108,6 @@ abstract class Node<TKey extends Comparable<TKey>>
     return this.getKeyCount() > (this.keys.length / 2);
   }
 
-  public Node<TKey> getLeftSibling()
-  {
-    if (this.leftSibling != null && this.leftSibling.getParent() == this.getParent())
-      return this.leftSibling;
-    return null;
-  }
-
-  public void setLeftSibling(Node<TKey> sibling)
-  {
-    this.leftSibling = sibling;
-  }
-
-  public Node<TKey> getRightSibling()
-  {
-    if (this.rightSibling != null && this.rightSibling.getParent() == this.getParent())
-      return this.rightSibling;
-    return null;
-  }
-
-  public void setRightSibling(Node<TKey> silbling)
-  {
-    this.rightSibling = silbling;
-  }
-
   public Node<TKey> dealUnderflow()
   {
     if (this.getParent() == null)
@@ -134,12 +138,14 @@ abstract class Node<TKey extends Comparable<TKey>>
     }
   }
 
-  public abstract NodeType getNodeType();
-  public abstract int search(TKey key);
+/* Abstract methods ***********************************************************/
+
+  public    abstract NodeType   getNodeType();
+  public    abstract int        search(TKey key);
   protected abstract Node<TKey> split();
   protected abstract Node<TKey> pushUpKey(TKey key, Node<TKey> leftChild, Node<TKey> rightNode);
-  protected abstract void processChildrenTransfer(Node<TKey> borrower, Node<TKey> lender, int borrowIndex);
+  protected abstract void       processChildrenTransfer(Node<TKey> borrower, Node<TKey> lender, int borrowIndex);
   protected abstract Node<TKey> processChildrenFusion(Node<TKey> leftChild, Node<TKey> rightChild);
-  protected abstract void fusionWithSibling(TKey sinkKey, Node<TKey> rightSibling);
-  protected abstract TKey transferFromSibling(TKey sinkKey, Node<TKey> sibling, int borrowIndex);
+  protected abstract void       fusionWithSibling(TKey sinkKey, Node<TKey> rightSibling);
+  protected abstract TKey       transferFromSibling(TKey sinkKey, Node<TKey> sibling, int borrowIndex);
 }
