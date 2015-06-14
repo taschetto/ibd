@@ -18,14 +18,19 @@ public class BTreeSim {
    */
   public static void main(String args[]){
 		IntegerBTree tree = new IntegerBTree();
-        
-        /*
-          Criar opcoes para:
-       
-            1. Inserção de um lote de N registros com valores aleatórios ou sequenciais.
-            2. Busca de um registro pelo valor de chave.
-            3. Exclusão de um registro individual na tabela.
-        */
+    tree.insert(10);
+    tree.insert(100);
+    tree.insert(1000);
+    tree.insert(50);
+    tree.insert(500);
+    tree.insert(5000);
+    tree.plot();
+    /*
+      Criar opcoes para:
+        1. Inserção de um lote de N registros com valores aleatórios ou sequenciais.
+        2. Busca de um registro pelo valor de chave.
+        3. Exclusão de um registro individual na tabela.
+    */
 	}
 }
 
