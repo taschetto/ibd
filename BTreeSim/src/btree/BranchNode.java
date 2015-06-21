@@ -1,5 +1,8 @@
 package btree;
 
+import utils.Counter;
+import utils.Writer;
+
 class BranchNode<TKey extends Comparable<TKey>> extends Node<TKey>
 {
   protected final static int BRANCHORDER = 4;
@@ -240,5 +243,34 @@ class BranchNode<TKey extends Comparable<TKey>> extends Node<TKey>
     }
 
     return upKey;
+  }
+  
+  @Override
+  protected String walk(Counter counter, Writer writer)
+  {
+    String nodeid = "node" + counter.increment();
+    writer.write(nodeid + "[label = \"");
+    
+    int i = 0;
+    for (; i < this.getKeyCount(); i++)
+    {
+        writer.write("<f" + i + "> |");
+        writer.write(this.getKey(i).toString());
+        writer.write("|");
+    }
+ 
+    writer.writeln("<f" + i + ">\"];");
+
+    int childNum = -1;
+
+    for (Object o : this.children)
+    {
+      if (o == null) continue;
+      Node<TKey> child = (Node<TKey>) o;
+      childNum++;
+      String childnodeid = child.walk(counter, writer);
+      writer.writeln("\"" + nodeid + "\":f" + childNum + " -> \"" + childnodeid + "\"");
+    }
+    return nodeid;
   }
 }

@@ -18,13 +18,10 @@ public class BTreeSim {
    */
   public static void main(String args[]){
 		IntegerBTree tree = new IntegerBTree();
-    tree.insert(10);
-    tree.insert(100);
-    tree.insert(1000);
-    tree.insert(50);
-    tree.insert(500);
-    tree.insert(5000);
-    tree.plot();
+    for (int i = 0; i < 21; i++)
+      tree.insert(i);
+
+    tree.toGraphViz();
     /*
       Criar opcoes para:
         1. Inserção de um lote de N registros com valores aleatórios ou sequenciais.

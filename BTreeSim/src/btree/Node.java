@@ -1,5 +1,8 @@
 package btree;
 
+import utils.Counter;
+import utils.Writer;
+
 abstract class Node<TKey extends Comparable<TKey>>
 {
   protected Object[] keys;
@@ -148,4 +151,5 @@ abstract class Node<TKey extends Comparable<TKey>>
   protected abstract Node<TKey> processChildrenFusion(Node<TKey> leftChild, Node<TKey> rightChild);
   protected abstract void       fusionWithSibling(TKey sinkKey, Node<TKey> rightSibling);
   protected abstract TKey       transferFromSibling(TKey sinkKey, Node<TKey> sibling, int borrowIndex);
+  protected abstract String     walk(Counter counter, Writer writer);
 }
