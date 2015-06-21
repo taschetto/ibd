@@ -7,10 +7,12 @@ import utils.Writer;
 
 public class BTree<TKey extends Comparable<TKey>, TRecord>
 {
+  public static int ORDER = 3;
   private Node<TKey> root;
 
-  public BTree()
+  public BTree(int order)
   {
+    BTree.ORDER = order;
     this.root = new LeafNode<TKey, TRecord>();
   }
 
@@ -56,7 +58,7 @@ public class BTree<TKey extends Comparable<TKey>, TRecord>
     return (LeafNode<TKey, TRecord>)node;
   }
 
-  public void toGraphViz()
+  public String toGraphViz()
   {
     Counter counter = new Counter();
     Writer writer = new Writer();
@@ -70,7 +72,10 @@ public class BTree<TKey extends Comparable<TKey>, TRecord>
     System.out.println(gv.getDotSource());
 
     String type = "svg";
-    File out = new File("/tmp/out." + type);
+    String path = "/tmp/out." + type;
+    File out = new File(path);
     gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
+    
+    return path;
   }
 }

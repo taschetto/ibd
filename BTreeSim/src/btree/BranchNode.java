@@ -5,13 +5,12 @@ import utils.Writer;
 
 class BranchNode<TKey extends Comparable<TKey>> extends Node<TKey>
 {
-  protected final static int BRANCHORDER = 4;
   protected Object[] children;
 
   public BranchNode()
   {
-    this.keys = new Object[BRANCHORDER + 1];
-    this.children = new Object[BRANCHORDER + 2];
+    this.keys = new Object[BTree.ORDER + 1];
+    this.children = new Object[BTree.ORDER + 2];
   }
 
 /* Getters & setters **********************************************************/

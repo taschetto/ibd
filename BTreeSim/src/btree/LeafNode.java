@@ -5,13 +5,12 @@ import utils.Writer;
 
 class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey>
 {
-  protected final static int LEAFORDER = 4;
   private Object[] values;
 
   public LeafNode()
   {
-    this.keys = new Object[LEAFORDER + 1];
-    this.values = new Object[LEAFORDER + 1];
+    this.keys = new Object[BTree.ORDER + 1];
+    this.values = new Object[BTree.ORDER + 1];
   }
 
 /* Getters & setters **********************************************************/
