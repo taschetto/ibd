@@ -160,13 +160,8 @@ public class BTreeSimUI extends javax.swing.JFrame {
     int max = Integer.parseInt(JOptionPane.showInputDialog("What is the random range end?"));
     
     Random rand = new Random();
-
     for (int i = 0; i < count; i++)
-    {
-      int r = rand.nextInt((max - min) + 1) + min;
-      System.out.println(r);
-      this.tree.insert(r);
-    }
+      this.tree.insert(rand.nextInt((max - min) + 1) + min);
   }//GEN-LAST:event_buttonAddRandomActionPerformed
 
   private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed

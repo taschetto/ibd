@@ -69,10 +69,17 @@ public class BTree<TKey extends Comparable<TKey>, TRecord>
     this.root.walk(counter, writer);
     gv.addln(writer.getBuffer());
     gv.addln(gv.end_graph());
-    System.out.println(gv.getDotSource());
 
     String type = "svg";
-    String path = "/tmp/out." + type;
+    String path = "";
+    if (System.getProperty("os.name").startsWith("Windows"))
+    {
+      path = System.getProperty("java.io.tmpdir") + "out." + type;
+    }
+    else if (System.getProperty("os.name").startsWith("Linux") || System.getProperty("os.name").startsWith("LINUX"))
+    {
+      path = "/tmp/out." + type;
+    }
     File out = new File(path);
     gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
     

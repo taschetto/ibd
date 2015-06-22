@@ -37,6 +37,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import javax.swing.JOptionPane;
 
 /**
  * <dl>
@@ -96,6 +97,16 @@ public class GraphViz
     * a graph.
     */
    public GraphViz() {
+    if (System.getProperty("os.name").startsWith("Windows"))
+    {
+      GraphViz.TEMP_DIR = System.getProperty("java.io.tmpdir");
+      GraphViz.DOT = "./graphviz/bin/dot.exe";
+    }
+    else if (System.getProperty("os.name").startsWith("Linux") || System.getProperty("os.name").startsWith("LINUX"))
+    {
+      GraphViz.TEMP_DIR = "/tmp";
+      GraphViz.DOT = "/usr/bin/dot";
+    }    
    }
 
    /**
@@ -214,6 +225,10 @@ public class GraphViz
          System.err.println("Error:    in I/O processing of tempfile in dir " + GraphViz.TEMP_DIR+"\n");
          System.err.println("       or in calling external command");
          ioe.printStackTrace();
+         String message = ioe.getMessage();
+         message += "\n\nPlease download GraphViz from http://graphviz.org/Download_windows.php (Windows)\n"
+                 +  "or install it with `sudo apt-get install graphviz` (Linux Ubuntu).";
+         JOptionPane.showMessageDialog(null, message, "An error ocurred", JOptionPane.ERROR_MESSAGE);
       }
       catch (java.lang.InterruptedException ie) {
          System.err.println("Error: the execution of the external program was interrupted");

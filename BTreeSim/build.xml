@@ -70,4 +70,8 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+  <copy todir="./dist/graphviz">
+    <fileset dir="./graphviz/" includes="**"/>
+  </copy>
 </project>
