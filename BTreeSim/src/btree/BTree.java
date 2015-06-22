@@ -1,6 +1,6 @@
 package btree;
 
-import graphviz.GraphViz;
+import utils.GraphViz;
 import java.io.File;
 import utils.Counter;
 import utils.Writer;
