@@ -90,14 +90,12 @@ abstract class Node<TKey extends Comparable<TKey>>
     }
     newRNode.setParent(this.getParent());
 
-    // maintain links of sibling nodes
     newRNode.setLeftSibling(this);
     newRNode.setRightSibling(this.rightSibling);
     if (this.getRightSibling() != null)
       this.getRightSibling().setLeftSibling(newRNode);
     this.setRightSibling(newRNode);
 
-    // push up a key to parent internal node
     return this.getParent().pushUpKey(upKey, this, newRNode);
   }
 
@@ -115,7 +113,6 @@ abstract class Node<TKey extends Comparable<TKey>>
   {
     if (this.getParent() == null)
       return null;
-    // try to borrow a key from sibling
     Node<TKey> leftSibling = this.getLeftSibling();
     if (leftSibling != null && leftSibling.canLendAKey())
     {
@@ -130,7 +127,6 @@ abstract class Node<TKey extends Comparable<TKey>>
       return null;
     }
 
-    // Can not borrow a key from any sibling, then do fusion with sibling
     if (leftSibling != null)
     {
       return this.getParent().processChildrenFusion(leftSibling, this);

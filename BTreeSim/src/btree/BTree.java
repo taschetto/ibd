@@ -51,9 +51,7 @@ public class BTree<TKey extends Comparable<TKey>, TRecord>
   {
     Node<TKey> node = this.root;
     while (node.getNodeType() == NodeType.BranchNode)
-    {
       node = ((BranchNode<TKey>)node).getChild(node.search(key));
-    }
 
     return (LeafNode<TKey, TRecord>)node;
   }

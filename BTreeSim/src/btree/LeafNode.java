@@ -36,14 +36,11 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey>
 
   private void insertAt(int index, TKey key, TValue value)
   {
-    // move space for the new key
     for (int i = this.getKeyCount() - 1; i >= index; --i)
     {
       this.setKey(i + 1, this.getKey(i));
       this.setValue(i + 1, this.getValue(i));
     }
-
-    // insert new key and value
     this.setKey(index, key);
     this.setValue(index, value);
     ++this.keyCount;
@@ -88,13 +85,9 @@ class LeafNode<TKey extends Comparable<TKey>, TValue> extends Node<TKey>
     {
        int cmp = this.getKey(i).compareTo(key);
        if (cmp == 0)
-       {
          return i;
-       }
        else if (cmp > 0)
-       {
          return -1;
-       }
     }
 
     return -1;
