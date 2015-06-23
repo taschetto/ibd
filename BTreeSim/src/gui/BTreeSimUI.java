@@ -40,6 +40,7 @@ public class BTreeSimUI extends javax.swing.JFrame {
     buttonAddRange = new javax.swing.JButton();
     buttonAddRandom = new javax.swing.JButton();
     buttonClear = new javax.swing.JButton();
+    buttonSearch = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,25 +87,35 @@ public class BTreeSimUI extends javax.swing.JFrame {
       }
     });
 
+    buttonSearch.setText("Search");
+    buttonSearch.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonSearchActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-          .addComponent(buttonView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(fieldValue, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(buttonAdd)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(buttonAddRange)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(buttonAddRandom)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(buttonRemove))
-          .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addComponent(buttonView, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+              .addComponent(fieldValue, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(buttonAdd)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(buttonAddRange)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(buttonAddRandom)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(buttonRemove)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(buttonSearch))))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -116,7 +127,8 @@ public class BTreeSimUI extends javax.swing.JFrame {
           .addComponent(buttonAdd)
           .addComponent(buttonRemove)
           .addComponent(buttonAddRange)
-          .addComponent(buttonAddRandom))
+          .addComponent(buttonAddRandom)
+          .addComponent(buttonSearch))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(buttonView)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -169,6 +181,16 @@ public class BTreeSimUI extends javax.swing.JFrame {
     this.tree = new IntegerBTree(order);
   }//GEN-LAST:event_buttonClearActionPerformed
 
+  private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
+    int key = Integer.parseInt(JOptionPane.showInputDialog("Search for which key?"));
+    Integer result = this.tree.search(key);
+    if (result != null)
+      JOptionPane.showMessageDialog(null, "The key " + key + " was found inside the index! Reference=" + result.hashCode(), "Key found!", JOptionPane.INFORMATION_MESSAGE);
+    else
+      JOptionPane.showMessageDialog(null, "The key " + key + " was not found inside the index.", "Key not found!", JOptionPane.ERROR_MESSAGE);
+    
+  }//GEN-LAST:event_buttonSearchActionPerformed
+
   /**
    * @param args the command line arguments
    */
@@ -213,6 +235,7 @@ public class BTreeSimUI extends javax.swing.JFrame {
   private javax.swing.JButton buttonAddRange;
   private javax.swing.JButton buttonClear;
   private javax.swing.JButton buttonRemove;
+  private javax.swing.JButton buttonSearch;
   private javax.swing.JButton buttonView;
   private javax.swing.JFormattedTextField fieldValue;
   // End of variables declaration//GEN-END:variables
